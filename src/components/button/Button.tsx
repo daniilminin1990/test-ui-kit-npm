@@ -14,10 +14,10 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const ButtonPolymorph = <T extends ElementType = 'button'>(props: ButtonProps<T>, ref: any) => {
-  const { as: Component = 'button', className, fullWidth, variant = 'primary', children, ...rest } = props
+  const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,react/react-in-jsx-scope
-  return <Component className={clsx(s.button, s[variant], fullWidth && s.fullWidth, className)} ref={ref} {...rest}/>
+  return <Component className={clsx(s.button, s[variant], fullWidth && s.fullWidth, className)} ref={ref} {...rest} />
 }
 
 export const Button = forwardRef(ButtonPolymorph) as <T extends ElementType = 'button'>(

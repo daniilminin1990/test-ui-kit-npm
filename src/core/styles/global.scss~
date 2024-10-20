@@ -1,5 +1,0 @@
-@forward "boilerplate";
-@forward "colors";
-@forward "typography";
-
-// @use 'global' в другом файле, где хочу использовать эти стили и они будут доступны что colors, что boilerplate, что typography
