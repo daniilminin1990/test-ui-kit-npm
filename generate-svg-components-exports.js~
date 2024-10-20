@@ -13,12 +13,12 @@ const componentFiles = fs.readdirSync(componentDir).filter(file => file.endsWith
 // Создаем массив строк для импорта и экспорта
 const importStatements = componentFiles.map((file) => {
   const componentName = path.basename(file, '.tsx') // Название файла без расширения
-  return `import ${componentName} from './${componentName}'`
+  return `import ${componentName} from './${componentName}';`
 })
 
 const exportStatements = componentFiles.map((file) => {
   const componentName = path.basename(file, '.tsx') // Название файла без расширения
-  return `export { ${componentName} }`
+  return `export { ${componentName} };`
 })
 
 // Объединяем импорты и экспорты

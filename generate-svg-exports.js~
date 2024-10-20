@@ -60,12 +60,12 @@ const toCamelCase = (str) => {
 // Создаем массив строк для импорта и экспорта
 const importStatements = svgFiles.map((file) => {
   const componentName = toCamelCase(path.basename(file, '.svg')) // Название файла без расширения
-  return `import ${componentName} from './${file}'`
+  return `import ${componentName} from './${file}';`
 })
 
 const exportStatements = svgFiles.map((file) => {
   const componentName = toCamelCase(path.basename(file, '.svg')) // Название файла без расширения
-  return `export { ${componentName} }`
+  return `export { ${componentName} };`
 })
 
 // Объединяем импорты и экспорты

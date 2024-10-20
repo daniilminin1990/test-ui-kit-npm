@@ -6,7 +6,8 @@ const svgr = require('@svgr/rollup')
 const terser = require('@rollup/plugin-terser')
 const dts = require('rollup-plugin-dts')
 const packageJson = require('./package.json')
-const path = require('path') // path.resolve - из Node JS для преобразования относительного пути в абсолютный
+const path = require('path')
+const copy = require('rollup-plugin-copy') // path.resolve - из Node JS для преобразования относительного пути в абсолютный
 
 module.exports = [
   {
@@ -35,8 +36,10 @@ module.exports = [
         minimize: true
       }),
       url({
-        include: ['**/*.svg'], // Обрабатывает все SVG файлы
-        limit: 8192 // Размер файла, выше которого SVG будет скопирован в виде файла, а не встраиваться как base64
+        include: ['**/*.svg'] // Обрабатывает все SVG файлы
+        // limit: 8192, // Размер файла, выше которого SVG будет скопирован в виде файла, а не встраиваться как base64
+        // limit: 0, //  Копируем SVG файлы как есть, а не инлайним как base64
+        // emitFiles: true // Позволяет Rollup создавать файлы
       }),
       // Плагин для обработки SVG как React-компонентов
       svgr({
@@ -44,7 +47,14 @@ module.exports = [
         ref: true, // Добавляем поддержку ref
         memo: true // Используем memo для оптимизации
       }),
-      terser()
+      terser(),
+      copy({
+        targets: [
+          { src: 'src/core/assets/svgs/*', dest: 'dist/core/assets/svgs' } // Копируем SVG файлы
+        ],
+        // Опция verbose для дополнительной информации в консоли
+        verbose: true
+      })
     ]
   },
   {
@@ -52,7 +62,20 @@ module.exports = [
     // output: [{ file: 'dist/esm/index.d.ts', format: 'esm' }],
     input: packageJson.types, // Объединенный выход для типов
     output: [{ file: packageJson.types, format: 'esm' }],
-    plugins: [dts.default()],
-    external: [/\.(css|scss)$/]
+    // plugins: [dts.default()],
+    // external: [/\.(css|scss)$/]
+    plugins: [
+      dts.default(),
+      {
+        name: 'ignore-svg',
+        resolveId (source) {
+          if (source.endsWith('.svg')) {
+            return { id: source, external: true }
+          }
+          return null
+        }
+      }
+    ],
+    external: [/\.(css|scss|svg)$/] // Исключаем стили и SVG из деклараций типов
   }
 ]
