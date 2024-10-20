@@ -1,0 +1,30 @@
+const fs = require('fs');
+const path = require('path');
+
+// Путь к директории, где находятся ваши SVG
+const svgDir = path.resolve(__dirname, './core/assets');
+
+// Путь к index.ts, который будет сгенерирован
+const outputFile = path.resolve(__dirname, './src/components/assetImgsAndComponents/index.ts');
+
+// Получаем все файлы в папке svgDir
+const svgFiles = fs.readdirSync(svgDir).filter(file => file.endsWith('.svg'));
+
+// Создаем массив строк для импорта и экспорта
+const importStatements = svgFiles.map((file, index) => {
+  const componentName = path.basename(file, '.svg'); // Название файла без расширения
+  return `import ${componentName} from '../../core/assets/${file}';`;
+});
+
+const exportStatements = svgFiles.map((file) => {
+  const componentName = path.basename(file, '.svg'); // Название файла без расширения
+  return `export { ${componentName} };`;
+});
+
+// Объединяем импорты и экспорты
+const fileContent = `${importStatements.join('\n')}\n\n${exportStatements.join('\n')}`;
+
+// Записываем все в файл index.ts
+fs.writeFileSync(outputFile, fileContent);
+
+console.log(`Successfully generated exports for ${svgFiles.length} SVG files.`);
