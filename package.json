@@ -1,5 +1,8 @@
 {
-  "name": "test-ui-kit-npm",
+  "name": "@daniilminin1990/test-ui-kit-npm",
+  "publishConfig": {
+    "registry" : "https://npm/pkg.github.com/daniilminin1990"
+  },
   "version": "1.0.0",
   "description": "test-ui-kit-npm",
   "files": [
