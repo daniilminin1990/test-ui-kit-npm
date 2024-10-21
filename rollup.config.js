@@ -25,7 +25,8 @@ module.exports = [
     external: ['react/jsx-runtime', ...Object.keys(packageJson.dependencies), ...Object.keys(packageJson.devDependencies)],
     plugins: [
       typescript({
-        tsconfig: './tsconfig.json'
+        tsconfig: './tsconfig.json',
+        exclude: ['**/*.stories.tsx']
       }),
       postcss({
         extract: 'index.css',

@@ -12,6 +12,7 @@
 /build
 /dist
 .npmrc
+storybook-static
 
 # misc
 .DS_Store
@@ -25,3 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+
+*storybook.log
+
+# Кэш Rollup
+.rollup.cache/
+
