@@ -10,21 +10,49 @@ const outputFile = path.resolve(__dirname, './src/core/assets/svgComponents/inde
 // Получаем все файлы в папке componentDir
 const componentFiles = fs.readdirSync(componentDir).filter(file => file.endsWith('.tsx')) // Предполагается, что компоненты имеют расширение .tsx
 
-// Создаем массив строк для импорта и экспорта
-const importStatements = componentFiles.map((file) => {
+// Читаем уже существующий файл index.ts, если он существует
+let existingContent = ''
+if (fs.existsSync(outputFile)) {
+  existingContent = fs.readFileSync(outputFile, 'utf-8')
+}
+
+// Функция для добавления компонента в строку экспорта
+const addToExport = (existingExports, componentName) => {
+  const regex = /export\s+{(.+?)}/
+  const match = existingExports.match(regex)
+
+  if (match) {
+    const exportNames = match[1].split(',').map(name => name.trim())
+    if (!exportNames.includes(componentName)) {
+      exportNames.push(componentName)
+    }
+    return `export { ${exportNames.join(', ')} }`
+  } else {
+    return `export { ${componentName} }`
+  }
+}
+
+// Создаем массив строк для импорта и обновляем экспорт
+const importStatements = []
+let exportStatements = existingContent
+
+// Обрабатываем каждый файл
+componentFiles.forEach((file) => {
   const componentName = path.basename(file, '.tsx') // Название файла без расширения
-  return `import ${componentName} from './${componentName}'`
+
+  // Добавляем строку импорта
+  if (!existingContent.includes(`import ${componentName}`)) {
+    importStatements.push(`import ${componentName} from './${componentName}'`)
+  }
+
+  // Обновляем строку экспорта
+  exportStatements = addToExport(exportStatements, componentName)
 })
 
-const exportStatements = componentFiles.map((file) => {
-  const componentName = path.basename(file, '.tsx') // Название файла без расширения
-  return `export { ${componentName} }`
-})
-
-// Объединяем импорты и экспорты
-const fileContent = `${importStatements.join('\n')}\n\n${exportStatements.join('\n')}`
+// Объединяем импорты и обновленные экспорты
+const fileContent = `${importStatements.join('\n')}\n\n${exportStatements}`
 
 // Записываем все в файл index.ts
-fs.writeFileSync(outputFile, fileContent)
+fs.writeFileSync(outputFile, fileContent.trim())
 
-console.log(`Successfully generated exports for ${componentFiles.length} components.`)
+console.log(`Successfully generated/updated exports for ${componentFiles.length} components.`)

@@ -4,8 +4,4 @@ import arrowIosBackOutline from './arrow-ios-back-outline.svg'
 import arrowIosBack from './arrow-ios-back.svg'
 import arrowIosDownOutline from './arrow-ios-down-outline.svg'
 
-export { arrowBackOutline }
-export { arrowForwardOutline }
-export { arrowIosBackOutline }
-export { arrowIosBack }
-export { arrowIosDownOutline }
+export { arrowBackOutline, arrowForwardOutline, arrowIosBackOutline, arrowIosBack, arrowIosDownOutline }

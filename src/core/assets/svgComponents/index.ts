@@ -4,8 +4,4 @@ import ArrowIosBack from './ArrowIosBack'
 import ArrowIosBackOutline from './ArrowIosBackOutline'
 import ArrowIosDownOutline from './ArrowIosDownOutline'
 
-export { ArrowBackOutline }
-export { ArrowForwardOutline }
-export { ArrowIosBack }
-export { ArrowIosBackOutline }
-export { ArrowIosDownOutline }
+export { ArrowBackOutline, ArrowForwardOutline, ArrowIosBack, ArrowIosBackOutline, ArrowIosDownOutline }
