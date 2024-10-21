@@ -30,5 +30,5 @@ yarn-error.log*
 *storybook.log
 
 # Кэш Rollup
-.rollup.cache/
+.rollup.cache
 
