@@ -36,17 +36,17 @@ module.exports = [
         minimize: true
       }),
       url({
-        include: ['**/*.svg'], // Обрабатывает все SVG файлы
+        include: ['**/*.svg'] // Обрабатывает все SVG файлы
         // limit: 8192, // Размер файла, выше которого SVG будет скопирован в виде файла, а не встраиваться как base64
         // limit: 0, //  Копируем SVG файлы как есть, а не инлайним как base64
         // emitFiles: true // Позволяет Rollup создавать файлы
       }),
-      // Плагин для обработки SVG как React-компонентов
-      svgr({
-        icon: false, // Сохраняем оригинальные размеры SVG для корректного отображения
-        ref: true, // Добавляем поддержку ref
-        memo: true // Используем memo для оптимизации
-      }),
+      // // Плагин для обработки SVG как React-компонентов
+      // svgr({
+      //   icon: false, // Сохраняем оригинальные размеры SVG для корректного отображения
+      //   ref: true, // Добавляем поддержку ref
+      //   memo: true // Используем memo для оптимизации
+      // }),
       terser(),
       copy({
         targets: [
@@ -58,23 +58,10 @@ module.exports = [
     ]
   },
   {
-    // input: 'dist/esm/index.d.ts',
-    // output: [{ file: 'dist/esm/index.d.ts', format: 'esm' }],
     input: packageJson.types, // Объединенный выход для типов
     output: [{ file: packageJson.types, format: 'esm' }],
-    // plugins: [dts.default()],
-    // external: [/\.(css|scss)$/]
     plugins: [
-      dts.default(),
-      {
-        name: 'ignore-svg',
-        resolveId (source) {
-          if (source.endsWith('.svg')) {
-            return { id: source, external: true }
-          }
-          return null
-        }
-      }
+      dts.default()
     ],
     external: [/\.(css|scss|svg)$/] // Исключаем стили и SVG из деклараций типов
   }

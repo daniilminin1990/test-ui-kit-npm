@@ -3,11 +3,11 @@ declare module '*.scss' {
   export default content
 }
 
-declare module '*.svg' {
-  import type { HTMLProps, FC } from 'react'
-
-  export const ReactComponent: FC<HTMLProps<SVGElement>>
-}
+// declare module '*.svg' {
+//   import type { HTMLProps, FC } from 'react'
+//
+//   export const ReactComponent: FC<HTMLProps<SVGElement>>
+// }
 //
 // declare module '*.svg' {
 //   import type { SVGProps } from 'react'
@@ -16,7 +16,7 @@ declare module '*.svg' {
 //   export default content
 // }
 //
-// declare module '*.svg' {
-//   const content: string
-//   export default content
-// }
+declare module '*.svg' {
+  const content: string
+  export default content
+}

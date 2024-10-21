@@ -25,7 +25,12 @@
     "jsx": "react-jsx",
     "strictNullChecks": false
   },
-  "exclude": [
-    "src/core/assets/svgs/*.svg"  // Исключаем SVG
-  ]
+  //  "include": [
+  //    "src/**/*.ts",
+  //    "src/**/*.tsx",
+  //    "src/global.d.ts"
+  //  ],
+    "exclude": [
+      "src/core/assets/svgs/*.svg"  // Исключаем SVG ЭТО НЕПОНЯТНЛ, ПОМОГАЕТ ИЛИ НЕТ/ ДУМАЮ НЕТ
+    ]
 }
